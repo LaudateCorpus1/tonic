@@ -18,3 +18,9 @@ members = [
     "tests/extern_path/my_application",
     "tests/integration_tests"
 ]
+
+[patch.crates-io]
+prost = { git = "https://github.com/discord/prost", rev = "e36bd840c3905ba8b9c059d6c9b3dc20eb6449d7" }
+prost-types = { git = "https://github.com/discord/prost", rev = "e36bd840c3905ba8b9c059d6c9b3dc20eb6449d7" }
+prost-build = { git = "https://github.com/discord/prost", rev = "e36bd840c3905ba8b9c059d6c9b3dc20eb6449d7" }
+prost-derive = { git = "https://github.com/discord/prost", rev = "e36bd840c3905ba8b9c059d6c9b3dc20eb6449d7" }
