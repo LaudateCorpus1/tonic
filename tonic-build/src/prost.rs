@@ -13,6 +13,7 @@ pub fn configure() -> Builder {
         build_client: true,
         build_server: true,
         out_dir: None,
+        include_file: None,
         extern_path: Vec::new(),
         field_attributes: Vec::new(),
         type_attributes: Vec::new(),
@@ -186,6 +187,7 @@ pub struct Builder {
     pub(crate) proto_path: String,
 
     out_dir: Option<PathBuf>,
+    include_file: Option<PathBuf>,
     #[cfg(feature = "rustfmt")]
     format: bool,
 }
@@ -215,6 +217,14 @@ impl Builder {
     /// Defaults to the `OUT_DIR` environment variable.
     pub fn out_dir(mut self, out_dir: impl AsRef<Path>) -> Self {
         self.out_dir = Some(out_dir.as_ref().to_path_buf());
+        self
+    }
+
+    pub fn include_file<P>(&mut self, path: P) -> &mut Self
+    where
+        P: Into<PathBuf>,
+    {
+        self.include_file = Some(path.into());
         self
     }
 
@@ -287,6 +297,9 @@ impl Builder {
         let format = self.format;
 
         config.out_dir(out_dir.clone());
+        if let Some(include_file) = self.include_file.as_ref() {
+            config.include_file(include_file);
+        }
         for (proto_path, rust_path) in self.extern_path.iter() {
             config.extern_path(proto_path, rust_path);
         }
